@@ -15,14 +15,11 @@ class ActivitiesCategoriesController extends Controller
     {
         $activities = ActivityCategory::query()->get();
 
-        return view('admin.activities-categories.index', compact('activities'));
-    }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.activities-categories.create');
+        return response()->json([
+            'success' => true,
+            'message' => 'Activity categories successfully returned',
+            'data' => $activities,
+        ]);
     }
 
     /**
@@ -46,17 +43,11 @@ class ActivitiesCategoriesController extends Controller
     {
         $activity = ActivityCategory::query()->findOrFail($id);
 
-        return view('admin.activities-categories.show', compact('activity'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $activity = ActivityCategory::query()->findOrFail($id);
-
-        return view('admin.activities-categories.update', compact('activity'));
+        return response()->json([
+            'success' => true,
+            'message' => 'Activity category successfully returned',
+            'data' => $activity
+        ]);
     }
 
     /**
@@ -64,12 +55,13 @@ class ActivitiesCategoriesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $activity = ActivityCategory::query()->findOrFail($id);
+        $activity = ActivityCategory::query()
+            ->findOrFail($id)
+            ->update($request->all());
 
         return response()->json([
             'success' => true,
             'message' => "Activity category updated successfully",
-            'data' => $activity
         ], 200);
     }
 
@@ -81,6 +73,9 @@ class ActivitiesCategoriesController extends Controller
         $activity = ActivityCategory::query()->findOrFail($id);
         $activity->delete();
 
-        return back();
+        return response()->json([
+            'success' => true,
+            'message' => 'Activity category deleted successfully'
+        ]);
     }
 }

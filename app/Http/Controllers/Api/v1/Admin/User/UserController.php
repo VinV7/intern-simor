@@ -16,15 +16,11 @@ class UserController extends Controller
     {
         $users = User::query()->get();
 
-        return view('admin.users.index', compact('users'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.users.create');
+        return response()->json([
+            'success' => true,
+            'message' => 'User data successfully returned',
+            'data' => $users
+        ]);
     }
 
     /**
@@ -51,17 +47,11 @@ class UserController extends Controller
     {
         $user = user::query()->findOrFail($id);
 
-        return view('admin.users.show', compact('user'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $user = user::query()->findOrFail($id);
-
-        return view('admin.users.update', compact('user'));
+        return response()->json([
+            'success' => true,
+            'message' => 'User data returned successfully',
+            'data' => $user
+        ]);
     }
 
     /**
@@ -76,7 +66,6 @@ class UserController extends Controller
         return response()->json([
             "success" => true,
             "message" => "User data updated successfully",
-            "data" => $user
         ], 200);
     }
 

@@ -15,15 +15,11 @@ class DepartmentController extends Controller
     {
         $departments = Department::query()->get();
 
-        return view('admin.departments.index', compact('departments'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.departments.create');
+        return response()->json([
+            'success' => true,
+            'message' => 'Departments successfully returned',
+            'data' => $departments
+        ]);
     }
 
     /**
@@ -47,17 +43,11 @@ class DepartmentController extends Controller
     {
         $department = Department::query()->findOrFail($id);
 
-        return view('admin.departments.show', compact('department'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $department = Department::query()->findOrFail($id);
-
-        return view('admin.departments.update', compact('department'));
+        return response()->json([
+            'success' => true,
+            'message' => 'Department successfuly returned',
+            'data' => $department
+        ]);
     }
 
     /**
@@ -72,7 +62,6 @@ class DepartmentController extends Controller
         return response()->json([
             'success' => true, 
             'message' => 'Departments updated successfully',
-            'data'    => $department
         ], 200);
     }
 
@@ -84,6 +73,9 @@ class DepartmentController extends Controller
         $department = Department::query()->findOrFail($id);
         $department->delete();
 
-        return back();
+        return response()->json([
+            'success' => true,
+            'message' => 'Department successfully deleted'
+        ]);
     }
 }
